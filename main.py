@@ -926,7 +926,6 @@ def group(update: Update, context: CallbackContext):
     #     all_text = update.message.reply_to_message.text.split('\n')
     #     phone_num = all_text[3][-13:]
     #     print(phone_num)
-    #     print('==================')
     #     appeals = Appeal.objects.order_by('id').filter(date_time=sent_dt).filter(phone_number=phone_num)[::]
     #     appeal = ''
     #     user_id = ''

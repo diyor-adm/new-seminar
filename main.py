@@ -27,7 +27,7 @@ MENU_STATE, FULL_NAME_STATE, PHONE_STATE,ANONS = range(4)
 
 
 
-channel_link = 'https://t.me/hilolaYussupovaa'
+channel_link = 'https://t.me/mashuqaningsiri'
 admin_link = 'https://t.me/Hilola_yussupova'
 group_id = '-1001958848500'
 
@@ -71,7 +71,7 @@ def is_admin(update,context):
 
 
 def hello_lang(update):
-    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nzBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@hilolayussupovaa'
+    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nzBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@mashuqaningsiri'
     return text
 
 

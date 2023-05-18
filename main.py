@@ -21,7 +21,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 from db.models import Users
 
-updater: Updater = Updater(token='5873015052:AAG96Kvcqf8C0r8X-p3rI6rzDc_iaoyHmrw', use_context=True)
+updater: Updater = Updater(token='5873015052:AAGUJspfochTYbReluCACNgDV1PJxi2C4Jo', use_context=True)
 dispatcher = updater.dispatcher
 MENU_STATE, FULL_NAME_STATE, PHONE_STATE,ANONS = range(4)
 

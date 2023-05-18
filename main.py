@@ -71,7 +71,7 @@ def is_admin(update,context):
 
 
 def hello_lang(update):
-    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nzBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@mashuqaningsiri'
+    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@mashuqaningsiri'
     return text
 
 

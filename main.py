@@ -163,7 +163,7 @@ def phone_keyboard(update):
 
 def full_name_start(update: Update, context: CallbackContext):
     text = 'Assalomu alaykum! "Ma`shuqaning Sirlari" botiga hush kelibsiz ❤️\n\n<b>Ro`yhatdan o`tishingiz</b> uchun Ismingizni yozib yuboring... 🌸'
-    context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('media\\1.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML)
+    context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('1.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML)
     return FULL_NAME_STATE
 
 
@@ -178,7 +178,7 @@ def full_name_handler(update: Update, context: CallbackContext):
         'full_name': update.message.text,
     })
     text = 'Rahmat! Telefon raqamingizni yuborsangiz, sizni to`liq ma`lumotlaringizni kirgazib qo`yamiz!\n\nTelefon raqamingizni kiriting yoki pastdagi tugmani bosing👇'
-    update.message.reply_photo(photo = open('media\\2.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=phone_keyboard(update))
+    update.message.reply_photo(photo = open('2.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=phone_keyboard(update))
     return PHONE_STATE
 
 
@@ -211,7 +211,7 @@ def new_user(update, context):
     user_name = Users.objects.filter(user_id=update.effective_user.id).update(full_name = new_full_name)
     user_phone = Users.objects.filter(user_id=update.effective_user.id).update(user_phone_num = new_phone_number)
     text = hello_lang(update)
-    context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('media\\3.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=channel_link_keyboard())
+    context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('3.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=channel_link_keyboard())
     return menu_handler(update, context)
 
 

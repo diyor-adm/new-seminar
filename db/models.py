@@ -7,43 +7,12 @@ except Exception:
     sys.exit()
 
 
-class Appeal(models.Model):
-    first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256)
-    address = models.CharField(max_length=256)
-    price = models.CharField(max_length=256)
-    phone_number = models.CharField(max_length=64)
-    user_age = models.CharField(max_length=16)
-    date_time = models.TextField(max_length=64)
-    user_id = models.PositiveIntegerField()
-
-
-class Seminars(models.Model):
-    first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256)
-    address = models.CharField(max_length=256)
-    seminar = models.CharField(max_length=256)
-    phone_number = models.CharField(max_length=64)
-    user_age = models.CharField(max_length=16)
-    date_time = models.TextField(max_length=64)
-    user_id = models.PositiveIntegerField()
-
-
-class Consultation(models.Model):
-    first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256)
-    address = models.CharField(max_length=256)
-    phone_number = models.CharField(max_length=64)
-    user_age = models.CharField(max_length=16)
-    date_time = models.TextField(max_length=64)
-    user_id = models.PositiveIntegerField()
-
-
-class users(models.Model):
+class Users(models.Model):
     full_name = models.CharField(max_length=256)
-    user_lang = models.CharField(max_length=256)
-    user_id = models.PositiveIntegerField()
+    user_phone_num = models.TextField(max_length=64)
+    username = models.TextField(max_length=64)
     date_time = models.TextField(max_length=64)
+    user_id = models.PositiveIntegerField()
 
 
 

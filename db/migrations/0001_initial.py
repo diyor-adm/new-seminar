@@ -12,54 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Appeal',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=256)),
-                ('last_name', models.CharField(max_length=256)),
-                ('phone_number', models.CharField(max_length=64)),
-                ('user_age', models.CharField(max_length=16)),
-                ('address', models.CharField(max_length=256)),
-                ('price', models.CharField(max_length=256)),
-                ('date_time', models.TextField(max_length=64)),
-                ('user_id', models.PositiveIntegerField()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Seminars',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=256)),
-                ('last_name', models.CharField(max_length=256)),
-                ('phone_number', models.CharField(max_length=64)),
-                ('user_age', models.CharField(max_length=16)),
-                ('address', models.CharField(max_length=256)),
-                ('seminar', models.CharField(max_length=256)),
-                ('date_time', models.TextField(max_length=64)),
-                ('user_id', models.PositiveIntegerField()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Consultation',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=256)),
-                ('last_name', models.CharField(max_length=256)),
-                ('phone_number', models.CharField(max_length=64)),
-                ('user_age', models.CharField(max_length=16)),
-                ('address', models.CharField(max_length=256)),
-                ('date_time', models.TextField(max_length=64)),
-                ('user_id', models.PositiveIntegerField()),
-            ],
-        ),
-        migrations.CreateModel(
             name='users',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('full_name', models.CharField(max_length=256)),
-                ('user_lang', models.CharField(max_length=256)),
-                ('user_id', models.PositiveIntegerField()),
+                ('user_phone_num', models.TextField(max_length=64)),
+                ('username', models.TextField(max_length=64)),
                 ('date_time', models.TextField(max_length=64)),
+                ('user_id', models.PositiveIntegerField()),
             ],
         ),
        

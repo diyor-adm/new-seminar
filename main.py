@@ -71,11 +71,7 @@ def is_admin(update,context):
 
 
 def hello_lang(update):
-<<<<<<< HEAD
     text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nzBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@hilolayussupovaa'
-=======
-    text = "Bepul marafonda ishtirok etish uchun quyidagi havola ustiga bosing va kanalga obuna bo'ling!"
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
     return text
 
 
@@ -104,11 +100,7 @@ def create_user(update,context):
         username = user_name,
         date_time = s_date_time
         )
-<<<<<<< HEAD
     return full_name_start(update,context)
-=======
-    return full_name(update,context)
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
 
 def check_user(update):
     user_list = Users.objects.filter(user_id=update.effective_user.id)
@@ -135,11 +127,7 @@ def start_handler(update: Update, context: CallbackContext):
         return menu_handler(update, context)
     else:
         update.effective_message.delete()
-<<<<<<< HEAD
         return full_name_start(update,context)
-=======
-        return full_name(update,context)
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
 
 
 def menu_handler(update: Update, context: CallbackContext):
@@ -173,7 +161,6 @@ def phone_keyboard(update):
         [[KeyboardButton(text=text, request_contact=True)]], resize_keyboard=True, one_time_keyboard=True)
 
 
-<<<<<<< HEAD
 def full_name_start(update: Update, context: CallbackContext):
     text = 'Assalomu alaykum! "Ma`shuqaning Sirlari" botiga hush kelibsiz ❤️\n\n<b>Ro`yhatdan o`tishingiz</b> uchun Ismingizni yozib yuboring... 🌸'
     context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('media\\1.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML)
@@ -186,25 +173,12 @@ def full_name(update: Update, context: CallbackContext):
     return FULL_NAME_STATE
 
 
-=======
-def full_name(update: Update, context: CallbackContext):
-    text = 'To`liq ismingizni kiriting'
-    context.bot.send_message(chat_id = update.effective_chat.id, text=text)
-    return FULL_NAME_STATE
-
-
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
 def full_name_handler(update: Update, context: CallbackContext):
     context.chat_data.update({
         'full_name': update.message.text,
     })
-<<<<<<< HEAD
     text = 'Rahmat! Telefon raqamingizni yuborsangiz, sizni to`liq ma`lumotlaringizni kirgazib qo`yamiz!\n\nTelefon raqamingizni kiriting yoki pastdagi tugmani bosing👇'
     update.message.reply_photo(photo = open('media\\2.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=phone_keyboard(update))
-=======
-    text = 'Telefon raqamingizni kiriting yoki pastdagi tugmani bosing'
-    update.message.reply_text(text=text, reply_markup=phone_keyboard(update))
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
     return PHONE_STATE
 
 
@@ -237,11 +211,7 @@ def new_user(update, context):
     user_name = Users.objects.filter(user_id=update.effective_user.id).update(full_name = new_full_name)
     user_phone = Users.objects.filter(user_id=update.effective_user.id).update(user_phone_num = new_phone_number)
     text = hello_lang(update)
-<<<<<<< HEAD
     context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('media\\3.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=channel_link_keyboard())
-=======
-    context.bot.send_message(chat_id = update.effective_chat.id,text=text, reply_markup=channel_link_keyboard())
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
     return menu_handler(update, context)
 
 
@@ -329,7 +299,6 @@ def notification(update: Update, context: CallbackContext):
 def stop_handler(update: Update, context: CallbackContext):
     update.message.reply_text('Hayr!', reply_markup=ReplyKeyboardRemove())
 
-<<<<<<< HEAD
 
 def send_db_func(update: Update, context: CallbackContext):
     admin = is_admin(update,context)
@@ -340,8 +309,6 @@ def send_db_func(update: Update, context: CallbackContext):
     else:
         return menu_handler(update, context)
 
-=======
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
 
 def group(update: Update, context: CallbackContext):
     arg = update.message.text
@@ -352,13 +319,10 @@ def group(update: Update, context: CallbackContext):
         elif arg == '/users':
             all_users = Users.objects.all()
             update.message.reply_text(f'Ayni vaqtgacha @mashuqaning_sirlari_robot botidan <b>{len(all_users)}</b> ta foydalanuvchi ro`yhatdan o`tgan',parse_mode=ParseMode.HTML)
-<<<<<<< HEAD
         elif arg == '/send_db':
             date = return_date()
             all_users = Users.objects.all()
             update.message.reply_document(document=open('db.sqlite3', 'rb'), filename=f"db.sqlite3", caption=f"Ma'lumotlar bazasida {len(all_users)} ta user mavjud.\n\nFayl olingan vaqt: {date}")
-=======
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
 
 
 def convert_date(date):
@@ -381,10 +345,7 @@ dispatcher.add_handler(ConversationHandler(
         MENU_STATE: [
             MessageHandler(Filters.regex((r'^🆘Yordam$|^🆘Помощь$')), help_me),
             MessageHandler(Filters.regex(r'^Obunachilarga xabar yuborish$|^Отправляйте сообщения подписчикам$'), notification),
-<<<<<<< HEAD
             CommandHandler('send_db', send_db_func),
-=======
->>>>>>> badd40503ab8e131661dcb2cf74ba25c176d922b
             MessageHandler(Filters.all, menu_handler),
         ],
 

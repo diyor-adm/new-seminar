@@ -15,4 +15,9 @@ class Users(models.Model):
     user_id = models.PositiveIntegerField()
 
 
+class Channels(models.Model):
+    channel_name = models.TextField(max_length=64)
+    channel_link = models.TextField(max_length=64)
+
+
 

@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='users',
+            name='Users',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('full_name', models.CharField(max_length=256)),
@@ -20,6 +20,15 @@ class Migration(migrations.Migration):
                 ('username', models.TextField(max_length=64)),
                 ('date_time', models.TextField(max_length=64)),
                 ('user_id', models.PositiveIntegerField()),
+            ],
+        ),
+
+        migrations.CreateModel(
+            name='Channels',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('channel_name', models.TextField(max_length=64)),
+                ('channel_link', models.TextField(max_length=64)),
             ],
         ),
        

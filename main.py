@@ -1,6 +1,6 @@
-from telegram.ext import Updater, MessageHandler,Dispatcher, ConversationHandler, CommandHandler, CallbackContext, Filters, CallbackQueryHandler, ChatMemberHandler
+from telegram.ext import Updater, MessageHandler,Dispatcher, ConversationHandler, CommandHandler, CallbackContext, Filters, CallbackQueryHandler, ContextTypes, PreCheckoutQueryHandler 
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, MessageEntity, ParseMode,Chat, ChatMember, ChatMemberUpdated
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, LabeledPrice
 import django
 import os
 import sys
@@ -11,6 +11,7 @@ import pytz
 import time
 from typing import Optional, Tuple
 import re
+import config
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -20,20 +21,32 @@ sys.dont_write_bytecode = True
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 from db.models import Users
+from db.models import Channels
 
-updater: Updater = Updater(token='5873015052:AAGUJspfochTYbReluCACNgDV1PJxi2C4Jo', use_context=True)
+updater: Updater = Updater(token=config.TELEGRAM_API, use_context=True)
 dispatcher = updater.dispatcher
-MENU_STATE, FULL_NAME_STATE, PHONE_STATE,ANONS = range(4)
-
-
-
-channel_link = 'https://t.me/mashuqaningsiri'
-admin_link = 'https://t.me/Hilola_yussupova'
-group_id = '-1001958848500'
+MENU_STATE, ADD_CHANNEL, PHONE_STATE,ANONS,MARKET_MENU,ALL_SALE = range(6)
+admin_link = 'https://t.me/AbdujabborovBot'
+unwantedBoys_link = 'https://t.me/UnwantedBoys_official'
+Abdujabborov_link = 'https://t.me/Abdujabborov_Islom_7'
+Javlon_link = 'https://t.me/Java_10magic'
+Maxa_link = 'https://t.me/Odilkhanov_33'
+group_id = '-1001963216352'
 
 
 def channel_link_keyboard():
-    keyboard = [[InlineKeyboardButton(text="Kanalga qo`shilish", url=channel_link)]]
+    keyboard = [[InlineKeyboardButton(text="Unwanted Boys", url=unwantedBoys_link)],[InlineKeyboardButton(text="Abdujabborov", url=Abdujabborov_link)], [InlineKeyboardButton(text="Javlon Anvarjonov", url=Javlon_link)], [InlineKeyboardButton(text="Maxa 🧤", url=Maxa_link)]]
+    channel_list = Channels.objects.all()
+    channel_link = ''
+    channel_name = ''
+    try:
+        for channel in channel_list:
+            channel_link = channel.channel_link
+            channel_name = channel.channel_name
+            keyboard.append([InlineKeyboardButton(text=channel_name, url=channel_link)])
+    except:
+        pass
+    
     return InlineKeyboardMarkup(keyboard)
 
 
@@ -47,6 +60,11 @@ def help_me(update: Update, context: CallbackContext):
     update.message.reply_text(
         text=text, reply_markup=help_menu_keyboard(update))
 
+
+def full_name_handler(update: Update, context: CallbackContext):
+    text = 'Assalomu alaykum, Unwanted Boys jamoasining rasmiy botiga xush kelibsiz!\n\nBotdan to`liq foydalanish uchun telefon raqamingizni yuborsangiz, sizni ma`lumotlaringizni ham kirgazib qo`yamiz!\n\nTelefon raqamingizni kiriting yoki pastdagi tugmani bosing👇'
+    update.message.reply_photo(photo = open('2.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=phone_keyboard(update))
+    return PHONE_STATE
 
 def menu_keyboard_admin(update):
     return ReplyKeyboardMarkup([
@@ -71,7 +89,7 @@ def is_admin(update,context):
 
 
 def hello_lang(update):
-    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli <b>"Ma`shuqaning Sirlari"</b> marafonidan ro`yhatga o`tdingiz 😍\n\nBu bot orqali sizga foydali ma`lumotlarni yetkazib turamiz. Va albatta marafonimizni g`oliblarini ham aynan shu botda aniqlaymiz ❤️\n\nMarafonga qo`shilish uchun havola 👇:\n\n@mashuqaningsiri'
+    text = '<b>Sizni tabriklaymiz! 🥳</b>\n\nSiz muvofaqiyatli ro`yhatga o`tdingiz 😍\n\nSovrinli o`yinda ishtirok etish uchun quyidagi kanallarga obuna bo`ling!\n\Obuna uchun havolalar 👇'
     return text
 
 
@@ -100,7 +118,7 @@ def create_user(update,context):
         username = user_name,
         date_time = s_date_time
         )
-    return full_name_start(update,context)
+    return full_name_handler(update,context)
 
 def check_user(update):
     user_list = Users.objects.filter(user_id=update.effective_user.id)
@@ -121,13 +139,14 @@ def check_user(update):
 def start_handler(update: Update, context: CallbackContext):
     new_flag, info_user = check_user(update)
     print(new_flag)
+    print(info_user)
     if not new_flag:
         return create_user(update, context)
     elif info_user:
         return menu_handler(update, context)
     else:
         update.effective_message.delete()
-        return full_name_start(update,context)
+        return full_name_handler(update,context)
 
 
 def menu_handler(update: Update, context: CallbackContext):
@@ -161,27 +180,6 @@ def phone_keyboard(update):
         [[KeyboardButton(text=text, request_contact=True)]], resize_keyboard=True, one_time_keyboard=True)
 
 
-def full_name_start(update: Update, context: CallbackContext):
-    text = 'Assalomu alaykum! "Ma`shuqaning Sirlari" botiga hush kelibsiz ❤️\n\n<b>Ro`yhatdan o`tishingiz</b> uchun Ismingizni yozib yuboring... 🌸'
-    context.bot.send_photo(chat_id = update.effective_chat.id, photo = open('1.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML)
-    return FULL_NAME_STATE
-
-
-def full_name(update: Update, context: CallbackContext):
-    text = 'Ismingizni yozib yuboring iltimos!'
-    context.bot.send_message(chat_id = update.effective_chat.id, text=text)
-    return FULL_NAME_STATE
-
-
-def full_name_handler(update: Update, context: CallbackContext):
-    context.chat_data.update({
-        'full_name': update.message.text,
-    })
-    text = 'Rahmat! Telefon raqamingizni yuborsangiz, sizni to`liq ma`lumotlaringizni kirgazib qo`yamiz!\n\nTelefon raqamingizni kiriting yoki pastdagi tugmani bosing👇'
-    update.message.reply_photo(photo = open('2.jpg', 'rb'), caption=text, parse_mode=ParseMode.HTML, reply_markup=phone_keyboard(update))
-    return PHONE_STATE
-
-
 def phone_entity_handler(update: Update, context: CallbackContext):
     phone_number_entity = pne = list(
         filter(lambda e: e.type == 'phone_number', update.message.entities))[0]
@@ -206,7 +204,7 @@ def phone_contact_handler(update: Update, context: CallbackContext):
 
 def new_user(update, context):
     cd = context.chat_data
-    new_full_name = cd['full_name'][0:255]
+    new_full_name = update.effective_chat.full_name
     new_phone_number = cd['phone_number'][0:63]
     user_name = Users.objects.filter(user_id=update.effective_user.id).update(full_name = new_full_name)
     user_phone = Users.objects.filter(user_id=update.effective_user.id).update(user_phone_num = new_phone_number)
@@ -310,6 +308,7 @@ def send_db_func(update: Update, context: CallbackContext):
         return menu_handler(update, context)
 
 
+
 def group(update: Update, context: CallbackContext):
     arg = update.message.text
     print(update.message.chat.id)
@@ -318,7 +317,7 @@ def group(update: Update, context: CallbackContext):
             send_users_list(update,context)
         elif arg == '/users':
             all_users = Users.objects.all()
-            update.message.reply_text(f'Ayni vaqtgacha @mashuqaning_sirlari_robot botidan <b>{len(all_users)}</b> ta foydalanuvchi ro`yhatdan o`tgan',parse_mode=ParseMode.HTML)
+            update.message.reply_text(f'Ayni vaqtgacha @UnwantedBoys_bot botidan <b>{len(all_users)}</b> ta foydalanuvchi ro`yhatdan o`tgan',parse_mode=ParseMode.HTML)
         elif arg == '/send_db':
             date = return_date()
             all_users = Users.objects.all()
@@ -343,18 +342,11 @@ dispatcher.add_handler(ConversationHandler(
 
 
         MENU_STATE: [
-            MessageHandler(Filters.regex((r'^🆘Yordam$|^🆘Помощь$')), help_me),
-            MessageHandler(Filters.regex(r'^Obunachilarga xabar yuborish$|^Отправляйте сообщения подписчикам$'), notification),
+            MessageHandler(Filters.regex((r'^🆘Yordam$')), help_me),
+            MessageHandler(Filters.regex(r'^Obunachilarga xabar yuborish$'), notification),
             CommandHandler('send_db', send_db_func),
             MessageHandler(Filters.all, menu_handler),
         ],
-
-
-        FULL_NAME_STATE: [
-            MessageHandler(Filters.text, full_name_handler),
-            MessageHandler(Filters.all, full_name),
-        ],
-
 
         PHONE_STATE: [
             MessageHandler(Filters.text & Filters.entity(
